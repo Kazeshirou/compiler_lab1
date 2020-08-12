@@ -41,4 +41,11 @@ struct token_by_char<'`'> {
     static constexpr type token{};
 };
 
+template <>
+struct token_by_char<'|'> {
+    using type = operator_or_t;
+    static constexpr type token{};
+};
+
+
 }  // namespace tokens
