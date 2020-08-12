@@ -19,20 +19,6 @@ TEST(Tokenizer_tests, token_by_char) {
         (std::is_same<open_parenthesis_t, token_by_char<'('>::type>::value));
     EXPECT_FALSE(
         (std::is_same<open_parenthesis_t, token_by_char<')'>::type>::value));
-
-    std::string                s{"*"};
-    std::vector<token_base_t*> tokens;
-    for (const auto c : s) {
-        switch (c) {
-            case '*': {
-                tokens.push_back(new token_by_char<'*'>::type);
-                break;
-            }
-        }
-    }
-    for (auto& v : tokens) {
-        delete v;
-    }
 }
 
 }  // namespace lab1::tests::tokens
