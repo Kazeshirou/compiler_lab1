@@ -1,0 +1,60 @@
+{
+    "tasks": [
+        {
+            "type": "shell",
+            "label": "unix DEBUG=on OPTIMIZATION=off",
+            "command": "make",
+            "args": [
+                "unix",
+                "DEBUG=on",
+                "OPTIMIZATION=off",
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "type": "shell",
+            "label": "test DEBUG=on OPTIMIZATION=off",
+            "command": "make",
+            "args": [
+                "test",
+                "DEBUG=on",
+                "OPTIMIZATION=off",
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "type": "shell",
+            "label": "clean",
+            "command": "make",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        }
+    ],
+    "version": "2.0.0"
+}

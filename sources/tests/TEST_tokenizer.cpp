@@ -10,7 +10,7 @@ namespace lab1::tests::tokens {
 using namespace ::tokens;
 
 TEST(Tokenizer_tests, is_operator) {
-    EXPECT_TRUE(is_operator<operator_concat_t>::value);
+    EXPECT_TRUE(is_operator<operator_star_t>::value);
     EXPECT_FALSE(is_operator<operand_t<'a'>>::value);
 }
 
@@ -22,7 +22,7 @@ TEST(Tokenizer_tests, token_by_char) {
 }
 
 
-constexpr char str[] = "(a|b)`c";
+constexpr char str[] = "(a|b)`c+*";
 
 TEST(Tokenizer_tests, tokens_storage_at) {
     using token_chunk_t = tokens_storage<str>;
@@ -42,6 +42,8 @@ TEST(Tokenizer_tests, tokens_storage_token_by_char) {
     EXPECT_FALSE(token_chunk.token_by_char('(').is_close_parenthesis());
     EXPECT_TRUE(token_chunk.token_by_char('|').is_operator());
     EXPECT_TRUE(token_chunk.token_by_char('`').is_operator());
+    EXPECT_TRUE(token_chunk.token_by_char('*').is_operator());
+    EXPECT_TRUE(token_chunk.token_by_char('+').is_operator());
     char c = '`';
     EXPECT_EQ(static_cast<const operator_base_t&>(token_chunk.token_by_char(c))
                   .get_priority(),
