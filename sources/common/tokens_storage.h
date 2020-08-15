@@ -61,10 +61,6 @@ struct tokens_storage_impl<current_i, first_char> {
     }
 };
 
-
-template <char... char_pack>
-struct char_pack_to_token_pack {};
-
 template <const char* c_str, size_t current_str_len, char... char_pack>
 struct c_str_to_char_pack {
     using result = typename c_str_to_char_pack<c_str, current_str_len - 1,

@@ -1,5 +1,6 @@
 #include <gtest/gtest.h>
 
+#include "token_helpers.h"
 #include "tokenizer.h"
 
 #include <iostream>
