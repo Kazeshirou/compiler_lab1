@@ -10,6 +10,7 @@ struct token_base_t {
     virtual token_value_t get_value() const                              = 0;
     virtual bool          is_value(const token_value_t test_value) const = 0;
     virtual bool          is_operator() const                            = 0;
+    virtual bool          is_operand() const                             = 0;
     virtual bool          is_open_parenthesis() const                    = 0;
     virtual bool          is_close_parenthesis() const                   = 0;
     virtual bool          is_empty() const                               = 0;
@@ -31,6 +32,10 @@ struct token_t : public token_base_t {
     }
 
     bool is_operator() const override {
+        return false;
+    }
+
+    bool is_operand() const override {
         return false;
     }
 
@@ -81,6 +86,10 @@ struct operator_t : public operator_base_t {
         return true;
     }
 
+    bool is_operand() const override {
+        return false;
+    }
+
     bool is_open_parenthesis() const override {
         return false;
     }
@@ -122,7 +131,11 @@ struct operator_concat_t : public operator_t<'`', 5, true, 2> {};
 struct operator_or_t : public operator_t<'|', 1, true, 2> {};
 
 template <token_value_t VALUE>
-struct operand_t : public token_t<VALUE> {};
+struct operand_t : public token_t<VALUE> {
+    bool is_operand() const override {
+        return true;
+    }
+};
 
 struct open_parenthesis_t : public token_t<'('> {
     bool is_open_parenthesis() const override {

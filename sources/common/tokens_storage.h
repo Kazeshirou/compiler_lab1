@@ -29,7 +29,6 @@ struct tokens_storage_impl {
     }
 
     constexpr static size_t size() {
-        std::cout << current.get_value() << " " << current_i << " | ";
         return next_tokens.size();
     }
 };
@@ -56,7 +55,6 @@ struct tokens_storage_impl<current_i, first_char> {
     }
 
     constexpr static size_t size() {
-        std::cout << current.get_value() << " " << current_i << std::endl;
         return current_i + 1;
     }
 };
@@ -74,7 +72,7 @@ struct c_str_to_char_pack<c_str, 0, char_pack...> {
 };
 
 template <const char* c_str>
-using tokens_storage =
+using tokens_storage_t =
     typename c_str_to_char_pack<c_str, strlen(c_str)>::result;
 
 }  // namespace tokens
