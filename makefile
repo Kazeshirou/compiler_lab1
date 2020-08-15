@@ -16,3 +16,7 @@ test::
 	@make all -j4 --makefile=sources/sources.mk BUILD=test
 	@echo - Executing linker
 	@make all -j4 --makefile=build_tools/link_mpu.mk
+
+.PHONY: graph
+graph::
+	@dot -Tpng bin/nfa.dot -o bin/nfa.png

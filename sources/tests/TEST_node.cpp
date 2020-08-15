@@ -2,9 +2,9 @@
 
 #include "graph_interface.h"
 
-namespace lab1::tests::node {
+namespace lab1::tests::graph {
 
-using namespace graph;
+using namespace ::graph;
 
 TEST(Node_tests, print) {
     Node n1("1");
@@ -17,4 +17,4 @@ TEST(Node_tests, print) {
                               "]\n\t1 -> 3 [label=a]\n");
 }
 
-}  // namespace lab1::tests::node
+}  // namespace lab1::tests::graph

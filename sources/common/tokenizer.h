@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cassert>
 #include <functional>
 #include <optional>
 #include <queue>
@@ -126,8 +127,8 @@ public:
                 return {};
             }
             if (need_concat(cur_token, next_token)) {
-                if (!insert_next_token(
-                        all_tokens_instance.token_by_char('`'))) {
+                if (!insert_next_token(all_tokens_instance.token_by_char(
+                        operator_concat_t{}.get_value()))) {
                     return {};
                 }
             }

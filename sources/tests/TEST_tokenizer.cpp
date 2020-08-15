@@ -3,9 +3,6 @@
 #include "token_helpers.h"
 #include "tokenizer.h"
 
-#include <iostream>
-#include <vector>
-
 namespace lab1::tests::tokens {
 
 using namespace ::tokens;
