@@ -20,3 +20,4 @@ test::
 .PHONY: graph
 graph::
 	@dot -Tpng bin/nfa.dot -o bin/nfa.png
+	@dot -Tpng bin/dfa.dot -o bin/dfa.png

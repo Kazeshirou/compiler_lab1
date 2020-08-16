@@ -64,6 +64,10 @@ public:
         double_circle_ = flag;
     }
 
+    bool get_double_circle() {
+        return double_circle_;
+    }
+
 private:
     std::string                              label_;
     bool                                     double_circle_{false};

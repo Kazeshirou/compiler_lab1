@@ -150,6 +150,10 @@ public:
         return temp;
     }
 
+    const std::list<Node*>& get_nodes() const {
+        return nodes_;
+    }
+
 private:
     Node* create_node_back(const Node* const after_that) {
         auto node = new Node();
