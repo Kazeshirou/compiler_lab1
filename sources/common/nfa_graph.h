@@ -2,6 +2,7 @@
 
 #include "graph_interface.h"
 
+#include <algorithm>
 #include <list>
 #include <stack>
 #include <string_view>
@@ -34,8 +35,8 @@ public:
             const token_base_t& token = tokens.front().get();
             tokens.pop();
             if (token.is_operand()) {
-                auto first = create_node();
-                auto last  = create_node();
+                auto first = create_node_back(nullptr);
+                auto last  = create_node_back(nullptr);
                 first->add_linked_node(std::string{token.get_value()}, last);
                 stack.push(std::make_pair(first, last));
 
@@ -68,8 +69,8 @@ public:
                 auto first_operand = stack.top();
                 stack.pop();
 
-                auto new_first = create_node();
-                auto new_last  = create_node();
+                auto new_first = create_node_front(first_operand.first);
+                auto new_last  = create_node_back(second_operand.second);
 
                 new_first->add_linked_node(first_operand.first);
                 new_first->add_linked_node(second_operand.first);
@@ -86,14 +87,14 @@ public:
                 auto operand = stack.top();
                 stack.pop();
 
-                auto new_first = create_node();
-                auto new_last  = create_node();
+                auto new_first = create_node_front(operand.first);
+                auto new_last  = create_node_back(operand.second);
 
                 new_first->add_linked_node(operand.first);
                 new_first->add_linked_node(new_last);
 
-                operand.second->add_linked_node(new_last);
                 operand.second->add_linked_node(operand.first);
+                operand.second->add_linked_node(new_last);
 
                 stack.push(std::make_pair(new_first, new_last));
 
@@ -104,13 +105,13 @@ public:
                 auto operand = stack.top();
                 stack.pop();
 
-                auto new_first = create_node();
-                auto new_last  = create_node();
+                auto new_first = create_node_front(operand.first);
+                auto new_last  = create_node_back(operand.second);
 
                 new_first->add_linked_node(operand.first);
 
-                operand.second->add_linked_node(new_last);
                 operand.second->add_linked_node(operand.first);
+                operand.second->add_linked_node(new_last);
 
                 stack.push(std::make_pair(new_first, new_last));
 
@@ -124,13 +125,8 @@ public:
         auto graph = stack.top();
         stack.pop();
 
-        auto new_first = new Node;
-        new_first->add_linked_node(graph.first);
-        nodes_.push_front(new_first);
-        new_first->set_double_circle(true);
-
-        graph.second->add_linked_node(create_node());
-        nodes_.back()->set_double_circle(true);
+        graph.first->set_double_circle(true);
+        graph.second->set_double_circle(true);
 
         size_t i = 0;
         for (auto& node : nodes_) {
@@ -155,9 +151,26 @@ public:
     }
 
 private:
-    Node* create_node() {
+    Node* create_node_back(const Node* const after_that) {
         auto node = new Node();
-        nodes_.push_back(node);
+        auto it   = std::find(nodes_.begin(), nodes_.end(), after_that);
+        if (it != nodes_.end()) {
+            nodes_.insert(++it, node);
+        } else {
+            nodes_.push_back(node);
+        }
+        return node;
+    }
+
+
+    Node* create_node_front(const Node* const before_that) {
+        auto node = new Node();
+        auto it   = std::find(nodes_.begin(), nodes_.end(), before_that);
+        if (it != nodes_.end()) {
+            nodes_.insert(it, node);
+        } else {
+            nodes_.push_front(node);
+        }
         return node;
     }
 
